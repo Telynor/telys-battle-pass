@@ -1,1 +1,27 @@
-{}
+{
+  "id": "telys-battle-pass",
+  "title": "Tely's Battle Pass",
+  "description": "Standalone configurable battle pass, compatible with Tely\u2019s Star Rail Ultimates v2.",
+  "version": "1.0.0",
+  "compatibility": {
+    "minimum": "14",
+    "verified": "14"
+  },
+  "relationships": {
+    "recommends": [
+      {
+        "id": "telys-star-rail-ultimates-v2",
+        "type": "module"
+      }
+    ]
+  },
+  "esmodules": [
+    "scripts/battle-pass.js"
+  ],
+  "styles": [
+    "styles/battle-pass.css"
+  ],
+  "manifest": "https://raw.githubusercontent.com/Telynor/telys-battle-pass/main/module.json",
+  "download": "https://github.com/Telynor/telys-battle-pass/archive/refs/heads/main.zip",
+  "url": "https://github.com/Telynor/telys-battle-pass"
+}
