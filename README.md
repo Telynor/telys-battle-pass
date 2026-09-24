@@ -11,3 +11,7 @@ Use the public macro `TelyBattlePass.open()` to open the window. This also works
 The supplied screenshot is a visual reference, not embedded game art. GM preview image paths can point to PNG files uploaded to Foundry's File Browser. Purchase item quantities and reward item quantities use the standard Item `system.quantity` field.
 
 The GM can set images for the top-left symbol and both reward tier bars in Configure. Use Browse, drag a File Browser image onto the path field, or paste its Foundry image path. Images are referenced by path and should remain in the Foundry data directory.
+
+The battle-pass viewer has a frameless drag margin. Drag it to reposition the window, double-click it or use its minimize button to collapse the pass, and configure an uploaded image for each navigation tab from the Interface Images section.
+
+Progress can be configured per player or shared by the entire group. Reward claims can target the selected player's main character or every character marked **Is in Main Party** by Tely's Star Rail Ultimates, either copying the full reward to each character or splitting the configured quantity across the party.

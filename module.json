@@ -2,7 +2,7 @@
   "id": "telys-battle-pass",
   "title": "Tely's Battle Pass",
   "description": "Standalone configurable battle pass, compatible with Tely\u2019s Star Rail Ultimates v2.",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "compatibility": {
     "minimum": "14",
     "verified": "14"
