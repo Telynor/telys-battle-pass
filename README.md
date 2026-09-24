@@ -9,3 +9,5 @@ Configure the three tab titles, progress levels and EXP, end date, rules, two re
 Use the public macro `TelyBattlePass.open()` to open the window. This also works as a call from Ultimates v2's macro or UI actions. There is no private API dependency.
 
 The supplied screenshot is a visual reference, not embedded game art. GM preview image paths can point to PNG files uploaded to Foundry's File Browser. Purchase item quantities and reward item quantities use the standard Item `system.quantity` field.
+
+The GM can set images for the top-left symbol and both reward tier bars in Configure. Use Browse, drag a File Browser image onto the path field, or paste its Foundry image path. Images are referenced by path and should remain in the Foundry data directory.
