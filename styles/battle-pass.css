@@ -1,0 +1,18 @@
+.tely-bp{--bp-bg:#18191c;--bp-panel:#26272b;--bp-line:#74654d;--bp-text:#f5f1e9;--bp-gold:#f5d48c;color:var(--bp-text)}
+.tely-bp .window-content{background:var(--bp-bg);color:var(--bp-text);padding:0;overflow:auto}
+.tely-bp button{background:#433824;color:#fff5dd;border:1px solid #b29458;padding:7px 11px;cursor:pointer}
+.tely-bp button:hover,.tely-bp button.active{background:#765a28;color:#fff}
+.tely-bp .bp-shell{padding:18px;min-height:100%;background:radial-gradient(circle at 85% 30%,#51412c,#18191c 60%)}
+.tely-bp header{display:flex;align-items:center;gap:16px;border-bottom:2px solid var(--bp-gold);padding-bottom:14px;flex-wrap:wrap}
+.tely-bp header strong{font-size:25px;color:var(--bp-gold)}
+.tely-bp header select{margin-left:auto;width:160px;background:#2a2929;color:#fff}
+.tely-bp nav{display:flex;gap:10px;margin:16px 0}.tely-bp nav button{font-size:16px;min-width:125px}
+.tely-bp .bp-rewards{display:grid;grid-template-columns:minmax(0,1fr) 230px;gap:16px}.tely-bp .bp-tracks{overflow-x:auto;min-width:0;border:1px solid var(--bp-line)}
+.tely-bp .bp-track{padding:8px;background:#242427;border-bottom:2px solid #68583a}.tely-bp .bp-track:nth-child(2){background:#30291f}.tely-bp .bp-track:nth-child(3){background:#3b2e1d}
+.tely-bp h2{font-size:17px;color:var(--bp-gold);margin:4px 0 9px}.tely-bp h2 span{color:#fff}.tely-bp .bp-row{display:flex;gap:6px;width:max-content}
+.tely-bp .bp-row article{width:102px;min-height:148px;background:#e5e3df;color:#151515;border:2px solid #8c795d;text-align:center;padding:5px;display:flex;flex-direction:column;align-items:center;gap:3px}
+.tely-bp .bp-row article.claimed{background:#d0dfcf}.tely-bp .bp-row img{width:53px;height:53px;object-fit:contain}.tely-bp .bp-row small{font-size:12px;overflow-wrap:anywhere}.tely-bp em,.tely-bp .bp-done{color:#236a2e;font-weight:bold;font-style:normal}
+.tely-bp aside{background:#242424;border:1px solid var(--bp-line);padding:12px;text-align:center}.tely-bp .bp-feature{width:100%;height:310px;object-fit:contain}.tely-bp aside button{margin:4px}
+.tely-bp .bp-missions article{display:flex;justify-content:space-between;align-items:center;gap:20px;margin:9px 0;padding:13px;background:var(--bp-panel);border-left:4px solid var(--bp-gold)}.tely-bp .bp-missions p{margin:4px 0}.tely-bp .bp-missions small{color:var(--bp-gold)}.tely-bp .bp-rules{white-space:normal;line-height:1.6;background:var(--bp-panel);padding:22px}
+.tely-bp .bp-config{padding:18px}.tely-bp .bp-config label{display:block;margin:8px 0}.tely-bp input,.tely-bp textarea{background:#f3f0e8;color:#151515;border:1px solid #9e8b65;padding:6px;width:100%}.tely-bp textarea{min-height:75px}.tely-bp .bp-config h3{border-bottom:1px solid var(--bp-gold);margin:22px 0 10px;color:var(--bp-gold)}.tely-bp .bp-edit-track{border:1px solid var(--bp-line);padding:10px;margin:12px 0}.tely-bp .bp-edit-row{display:flex;gap:5px;margin:7px 0}.tely-bp .bp-edit-row input{min-width:0;flex:1}.tely-bp .bp-edit-row input[type=number]{flex:0 0 65px}.tely-bp footer{text-align:right;margin:18px 0}
+#tely-bp-launch{position:fixed;bottom:105px;left:12px;z-index:70;width:44px;height:44px;border-radius:50%;background:#30271b;border:2px solid #d6b36b;color:#ffe7a4;font-size:20px;cursor:pointer}
