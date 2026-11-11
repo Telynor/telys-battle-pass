@@ -15,3 +15,8 @@ The GM can set images for the top-left symbol and both reward tier bars in Confi
 The battle-pass viewer has a frameless drag margin. Drag it to reposition the window, double-click it or use its minimize button to collapse the pass, and configure an uploaded image for each navigation tab from the Interface Images section.
 
 Progress can be configured per player or shared by the entire group. Reward claims can target the selected player's main character or every character marked **Is in Main Party** by Tely's Star Rail Ultimates, either copying the full reward to each character or splitting the configured quantity across the party.
+
+Reward distribution adds quantity to an existing matching stack when the item
+supports quantities. Matching uses source identity, with an exact item-definition
+match for older copies without source metadata. Items without quantities are
+granted as individual copies.
