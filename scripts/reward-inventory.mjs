@@ -1,4 +1,5 @@
 const ID = "telys-battle-pass";
+const SOURCES = [ID, "telys-star-rail-ultimates"];
 
 function canonicalUuid(uuid) {
   return typeof uuid === "string"
@@ -8,7 +9,7 @@ function canonicalUuid(uuid) {
 
 function sourceKeys(item) {
   return new Set([
-    item.uuid, item.getFlag?.(ID, "sourceUuid"), item._stats?.compendiumSource,
+    item.uuid, ...SOURCES.map(namespace => item.getFlag?.(namespace, "sourceUuid") ?? item.flags?.[namespace]?.sourceUuid), item._stats?.compendiumSource,
     item._stats?.duplicateSource, item.flags?.core?.sourceId
   ].map(canonicalUuid).filter(Boolean));
 }
@@ -21,10 +22,12 @@ function itemDefinition(item) {
   delete data.folder;
   delete data.ownership;
   if (data.system) delete data.system.quantity;
-  if (data.flags?.[ID]) {
-    delete data.flags[ID].sourceUuid;
-    if (!Object.keys(data.flags[ID]).length) delete data.flags[ID];
+  for (const namespace of SOURCES) {
+    if (!data.flags?.[namespace]) continue;
+    delete data.flags[namespace].sourceUuid;
+    if (!Object.keys(data.flags[namespace]).length) delete data.flags[namespace];
   }
+  if (data.flags && !Object.keys(data.flags).length) delete data.flags;
   const normalize = value => {
     if (Array.isArray(value)) return value.map(normalize);
     if (value && typeof value === "object") {
@@ -35,18 +38,19 @@ function itemDefinition(item) {
   return JSON.stringify(normalize(data));
 }
 
-export async function grantInventoryReward(actor, source, quantity) {
-  const canStack = Number.isFinite(source.system?.quantity);
+async function grantReward(actor, source, quantity) {
+  if (!Number.isSafeInteger(quantity) || quantity < 1) throw new Error("Reward quantity must be a positive whole number.");
+  const canStack = source.system?.quantity != null && Number.isFinite(Number(source.system.quantity));
   const keys = sourceKeys(source);
   const definition = canStack ? itemDefinition(source) : null;
   const stack = canStack && actor.items.find(item => {
-    if (item.type !== source.type || !Number.isFinite(item.system?.quantity)) return false;
+    if (item.type !== source.type || (item.system?.quantity == null || !Number.isFinite(Number(item.system.quantity)))) return false;
     if ([...sourceKeys(item)].some(key => keys.has(key))) return true;
     // Older Battle Pass awards were copied without recording their source UUID.
     return item.name === source.name && itemDefinition(item) === definition;
   });
   if (stack) {
-    const updated = await stack.update({"system.quantity": stack.system.quantity + quantity});
+    const updated = await stack.update({"system.quantity": Number(stack.system.quantity) + quantity});
     if (!updated) throw new Error(`Could not add ${source.name} to ${actor.name}'s stack.`);
     return;
   }
@@ -59,4 +63,16 @@ export async function grantInventoryReward(actor, source, quantity) {
   const copies = canStack ? [data] : Array.from({length: quantity}, () => structuredClone(data));
   const created = await actor.createEmbeddedDocuments("Item", copies);
   if (created?.length !== copies.length) throw new Error(`Could not grant every copy of ${source.name} to ${actor.name}.`);
+}
+
+// Both modules use the same actor queue when they distribute rewards together.
+const QUEUE_KEY = Symbol.for("telys.inventory-rewards");
+export function grantInventoryReward(actor, source, quantity) {
+  const queues = globalThis[QUEUE_KEY] ??= new WeakMap();
+  const prior = queues.get(actor) ?? Promise.resolve();
+  const next = prior.then(() => grantReward(actor, source, quantity));
+  const settled = next.catch(() => {});
+  queues.set(actor, settled);
+  settled.then(() => { if (queues.get(actor) === settled) queues.delete(actor); });
+  return next;
 }

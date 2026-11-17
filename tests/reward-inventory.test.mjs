@@ -31,3 +31,31 @@ test("new reward records its source and non-stackable rewards receive individual
   assert.equal(actor.items.length, 3);
   assert.deepEqual(actor.items[1].system, {});
 });
+
+test('matching HSR mission and Battle Pass source identities share a stack', async () => {
+  const source = item('Compendium.materials.items.Item.one', 'Material', 1);
+  const stack = item('Actor.a.Item.stack', 'Material', '4');
+  stack.getFlag = namespace => namespace === 'telys-star-rail-ultimates' ? 'Compendium.materials.items.one' : undefined;
+  const actor = {items: [stack], createEmbeddedDocuments() { assert.fail('unexpected duplicate'); }};
+  await grantInventoryReward(actor, source, 5);
+  assert.equal(stack.system.quantity, 9);
+});
+
+test('empty legacy flags do not prevent stacking and invalid quantities never grant', async () => {
+  const source = item('Item.one', 'Material', 1);
+  const stack = item('Actor.a.Item.stack', 'Material', 4);
+  const toObject=stack.toObject;
+  stack.toObject=()=>({...toObject(),flags:{}});
+  const actor = {items:[stack],createEmbeddedDocuments(){assert.fail('unexpected duplicate');}};
+  await grantInventoryReward(actor,source,2);
+  assert.equal(stack.system.quantity,6);
+  for(const quantity of [0,-1,1.5,Infinity]) await assert.rejects(grantInventoryReward(actor,source,quantity),/positive whole/);
+});
+
+test('simultaneous reward grants serialize stack updates', async () => {
+  const source=item('Item.one','Material',1),stack=item('Actor.a.Item.stack','Material',4);
+  stack.update=async changes=>{await new Promise(resolve=>setImmediate(resolve));stack.system.quantity=changes['system.quantity'];return stack;};
+  const actor={items:[stack],createEmbeddedDocuments(){assert.fail('unexpected duplicate');}};
+  await Promise.all([grantInventoryReward(actor,source,2),grantInventoryReward(actor,source,3)]);
+  assert.equal(stack.system.quantity,9);
+});

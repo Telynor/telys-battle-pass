@@ -4,7 +4,7 @@ Standalone Foundry VTT v14 module. Compatible with Tely's Star Rail Ultimates v2
 
 The Rewards and Missions screens follow the supplied visual references, with high contrast cards and compact icon tabs. Configure weekly and period missions with progress targets and EXP. GMs can adjust player mission progress and mark completion to credit EXP.
 
-Configure the three tab titles, progress levels and EXP, end date, rules, two reward tracks, mission text and EXP, Glory purchase item cost, and rotating preview PNG paths. The default tracks contain all 50 levels of Nameless Gift and Nameless Glory, using the Star Rail Materials compendium and the world Items for IPC Credits and passes. Credit rewards divide the listed Star Rail amounts by 1,000. Worlds with both reward tracks empty receive these defaults; existing custom rewards are preserved. Drop Item documents from the Foundry sidebar into the UUID inputs. Each player needs an assigned character holding the configured purchase item; the GM selects the player and clicks Unlock. Both tracks support a second reward slot when a level has multiple items, including the two Gift rewards at level 50. Existing Honor rewards appear in Glory slot 2 when upgrading. GM mission completion credits EXP once, permanently checks that mission for that player, and unlocks reward eligibility. GM clicks Grant to put reward Items on that player's character; claims cannot be repeated. Progress lives on user flags; configuration lives in a world setting.
+Configure the three tab titles, progress levels and EXP, end date, rules, two reward tracks, mission text and EXP, Glory purchase item cost, and rotating preview PNG paths. The default tracks contain all 50 levels of Nameless Gift and Nameless Glory, using the Star Rail Materials compendium and the world Items for IPC Credits and passes. Credit rewards divide the listed Star Rail amounts by 1,000. Worlds with both reward tracks empty receive these defaults; existing custom rewards are preserved. Drop Item documents from the Foundry sidebar into the UUID inputs. Each player needs an assigned character holding the configured purchase item; the player clicks Buy Premium Battle Pass while a GM is online, or the GM selects the player and purchases it. Both tracks support a second reward slot when a level has multiple items, including the two Gift rewards at level 50. Existing Honor rewards appear in Glory slot 2 when upgrading. GM mission completion credits EXP once, permanently checks that mission for that player, and unlocks reward eligibility. GM clicks Grant to put reward Items on that player's character; claims cannot be repeated. Progress lives on user flags; configuration lives in a world setting.
 
 Use the public macro `TelyBattlePass.open()` to open the window. This also works as a call from Ultimates v2's macro or UI actions. There is no private API dependency.
 
@@ -20,3 +20,29 @@ Reward distribution adds quantity to an existing matching stack when the item
 supports quantities. Matching uses source identity, with an exact item-definition
 match for older copies without source metadata. Items without quantities are
 granted as individual copies.
+
+
+## Carousel, premium, and mission controls
+
+In Configure, use **Rewards artwork carousel** to add or remove images. Use
+**Browse**, drop an image from the File Browser, or enter its path. Set the
+seconds between images. Existing preview images remain available to edit.
+Each image can optionally link to an Item with a quantity, required battle pass
+level, and **Premium required** checkbox. Once eligible, the GM selects the
+player and clicks **Unlock featured reward** below the image. Each linked
+carousel entry can be claimed once, independently of the level reward tracks.
+
+Under **Premium Battle Pass purchase**, choose an inventory currency Item or a
+character currency key such as `gp`, and set its amount. Players can buy premium
+from the Rewards screen while a GM is online. The GM validates the balance,
+charges the character, and unlocks premium. Shared progress mode unlocks premium
+for the shared pass when one player pays. The player receives the purchase result.
+
+The GM's Missions tab includes **Reset all missions**. After confirmation, this
+clears weekly and period mission counters and completion for every player (or
+the shared pass). Earned EXP, claimed rewards, and premium access are kept.
+Reset missions can be completed again for EXP.
+
+Battle Pass and HSR mission rewards recognize each other's source metadata and
+add matching quantities to one inventory stack. Older identical copies are also
+recognized. Items without a quantity field receive individual copies.

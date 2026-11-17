@@ -30,3 +30,12 @@
 .tely-bp .bp-tier-labels:before,.tely-bp .bp-tier-labels>div,.tely-bp .bp-level-column>b,.tely-bp .bp-gift-cell,.tely-bp .bp-glory-cells{box-sizing:border-box;min-height:0}
 .tely-bp .bp-top-right [data-bp-minimize]{width:34px;height:34px;padding:0;font-size:21px;border:1px solid #8f7952;border-radius:3px;background:#2a2520;color:#f5e5bf}
 .tely-bp .bp-top-right [data-bp-minimize]:hover{border-color:#f2d38f;background:#5b482d}
+
+.tely-bp .featured-list{display:flex;flex-direction:column;gap:12px}
+.tely-bp .bp-edit-row.featured{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding:12px;border:1px solid #8f7952;border-radius:4px}
+.tely-bp .featured label{display:flex;flex-direction:column;gap:4px;min-width:0}
+.tely-bp .featured input{min-width:0;width:100%}
+.tely-bp .featured input[type="checkbox"]{width:20px;height:20px}
+.tely-bp .featured .bp-image-input{display:flex;gap:4px}
+.tely-bp .featured .bp-image-input button{width:auto}
+.tely-bp .bp-feature-panel>small{display:block;margin:5px 0;color:#e2d5bc}
