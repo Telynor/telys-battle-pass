@@ -27,10 +27,10 @@ granted as individual copies.
 In Configure, use **Rewards artwork carousel** to add or remove images. Use
 **Browse**, drop an image from the File Browser, or enter its path. Set the
 seconds between images. Existing preview images remain available to edit.
-Each image can optionally link to an Item with a quantity, required battle pass
-level, and **Premium required** checkbox. Once eligible, the GM selects the
-player and clicks **Unlock featured reward** below the image. Each linked
-carousel entry can be claimed once, independently of the level reward tracks.
+Drop a Light Cone Item to use its artwork automatically, or choose an image
+with Browse. Existing Item UUIDs in image fields resolve to their Item artwork.
+One image is shown at a time, fading out and then fading in to the next. This
+carousel is a display only. Rewards are granted through the level reward tracks.
 
 Under **Premium Battle Pass purchase**, choose an inventory currency Item or a
 character currency key such as `gp`, and set its amount. Players can buy premium

@@ -8,7 +8,7 @@ globalThis.foundry = {
  applications: {api: {ApplicationV2: class {}}, instances: new Map()}
 };
 globalThis.ui = {notifications: {info() {}, error() {}}};
-const {purchase, resetMissions, grantFeatured, BattlePass, Config} = await import('../scripts/battle-pass.js');
+const {purchase, resetMissions, BattlePass, Config} = await import('../scripts/battle-pass.js');
 
 function fixture({shared=false}={}) {
  const config = {title:'Pass',levels:50,xpPerLevel:100,art:['preview.png'],featuredRewards:[{id:'one',art:'preview.png',uuid:'Item.reward',quantity:3,level:2,premium:true}],carouselSeconds:7,tracks:[{id:'gift',rewards:[]},{id:'glory',rewards:[]}],tabs:['Rewards','Missions','Rules'],missions:[],purchaseMode:'currency',purchaseCurrency:'gp',purchaseQuantity:10,progressMode:shared?'shared':'individual'};
@@ -57,17 +57,13 @@ test('reset clears all missions while retaining EXP, claims and premium, includi
  }
 });
 
-test('carousel reward enforces premium, level and one-time claims',async()=>{
- const f=fixture();
- await assert.rejects(grantFeatured(f.user,'one'),/unavailable/);
- f.user.p.glory=true;f.user.p.xp=0;
- await assert.rejects(grantFeatured(f.user,'one'),/unavailable/);
- f.user.p.xp=100;
- await grantFeatured(f.user,'one');
- assert.equal(f.actor.items[0].system.quantity,3);
- assert.equal(f.user.p.claimed['featured:one'],true);
- await assert.rejects(grantFeatured(f.user,'one'),/unavailable/);
- assert.equal(f.actor.items.length,1);
+test('carousel is display only even when legacy featured rewards are eligible',()=>{
+ const f=fixture();f.user.p.glory=true;
+ const html=new BattlePass().rewardView(f.config,f.user.p);
+ assert.match(html,/class="bp-carousel"/);
+ assert.doesNotMatch(html,/bp-dots|data-do="featured"|Unlock featured reward|Premium · Level/);
+ const editor=new Config().featuredRow(f.config.featuredRewards[0]);
+ assert.doesNotMatch(editor,/f-qty|f-level|f-premium/);
 });
 
 test('old carousel images remain editable and players see premium purchase',async()=>{
